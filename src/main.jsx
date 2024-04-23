@@ -42,7 +42,7 @@ const router = createBrowserRouter([
         element: <NewPassword />,
       },
       {
-        path: 'confirm/:id',
+        path: 'confirm-account',
         element: <ConfirmAccount />,
       },
     ],

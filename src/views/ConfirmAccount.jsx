@@ -3,7 +3,13 @@ import { Alert } from '../components/Alert';
 import { useConfirmAccount } from '../hooks/useConfirmAccount';
 
 export const ConfirmAccount = () => {
-  const { alertData, confirmedUser } = useConfirmAccount();
+  const {
+    alertData,
+    confirmedUser,
+    confirmFormData,
+    handleChange,
+    confirmAccount,
+  } = useConfirmAccount();
 
   return (
     <>
@@ -12,18 +18,50 @@ export const ConfirmAccount = () => {
         <span className='text-slate-700'>proyectos</span>
       </h1>
 
-      <div className='px-5 py-10 mt-20 bg-white shadow-lg md:mt-10 rounded-xl'>
-        {alertData.message && <Alert {...alertData} />}
-
-        {confirmedUser && (
-          <Link
-            className='block mx-auto text-sm font-semibold text-center uppercase text-slate-500'
-            to='/'
+      <form
+        className='p-10 my-10 bg-white rounded-lg shadow'
+        onSubmit={confirmAccount}
+      >
+        <div className='mb-5'>
+          <label
+            className='block text-xl font-bold text-gray-600 uppercase'
+            htmlFor='token'
           >
-            Inicia sesión
-          </Link>
-        )}
-      </div>
+            Código
+          </label>
+          <input
+            id='token'
+            name='token'
+            type='token'
+            value={confirmFormData.token}
+            onChange={handleChange}
+            placeholder='Código de verificación'
+            className='w-full p-2 mt-3 border rounded-lg bg-gray-50'
+          />
+        </div>
+
+        <input
+          type='submit'
+          value='Confirmar Cuenta'
+          className='w-full py-3 font-bold text-white uppercase transition-all rounded bg-sky-700 hover:bg-sky-800 disabled:bg-gray-500'
+          disabled={!confirmFormData.token}
+        />
+      </form>
+
+      {(alertData.message || confirmedUser) && (
+        <div className='px-5 py-10 mt-20 bg-white shadow-lg md:mt-10 rounded-xl'>
+          {confirmedUser && (
+            <Link
+              className='block mx-auto text-sm font-semibold text-center uppercase text-sky-600'
+              to='/'
+            >
+              Inicia sesión
+            </Link>
+          )}
+
+          {alertData.message && <Alert {...alertData} />}
+        </div>
+      )}
     </>
   );
 };

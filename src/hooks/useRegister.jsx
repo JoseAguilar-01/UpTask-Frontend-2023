@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { axiosClient } from '../config/axiosClient';
 
 export const useRegister = () => {
@@ -12,6 +13,8 @@ export const useRegister = () => {
     isError: false,
     message: '',
   });
+
+  const navigate = useNavigate();
 
   const handleSubmit = async e => {
     e.preventDefault();
@@ -70,6 +73,8 @@ export const useRegister = () => {
         password: '',
         repeatPassword: '',
       });
+
+      navigate('/confirm-account');
     } catch (error) {
       const { response } = error;
 

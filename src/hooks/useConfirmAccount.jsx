@@ -1,5 +1,4 @@
-import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useState } from 'react';
 import { axiosClient } from '../config/axiosClient';
 
 export const useConfirmAccount = () => {
@@ -7,35 +6,67 @@ export const useConfirmAccount = () => {
     isError: false,
     message: '',
   });
+  const [confirmFormData, setConfirmFormData] = useState({
+    token: '',
+  });
   const [confirmedUser, setConfirmedUser] = useState(false);
 
-  useEffect(() => {
-    confirmAccount();
-  }, []);
+  const confirmAccount = async e => {
+    e.preventDefault();
 
-  const params = useParams();
+    if (Object.values(confirmFormData).includes('')) {
+      setAlertData({
+        isError: true,
+        message: 'Todos los campos son obligatorios',
+      });
+    }
 
-  const confirmAccount = async () => {
     try {
-      const { data } = await axiosClient(`/users/confirm/${params.id}`);
+      const { data } = await axiosClient(
+        `/users/confirm/${confirmFormData.token}`,
+      );
 
       setAlertData({
         isError: false,
         message: data.message,
       });
 
+      resetConfirmFormData();
+
       setConfirmedUser(true);
     } catch (error) {
       const { response } = error;
-
-      console.error(response);
 
       setAlertData({
         isError: true,
         message: response.data.message,
       });
+
+      resetAlertData();
     }
   };
 
-  return { alertData, confirmedUser };
+  const handleChange = e => {
+    const { name, value } = e.target;
+
+    setConfirmFormData({ ...confirmFormData, [name]: value });
+  };
+
+  const resetConfirmFormData = () => {
+    setConfirmFormData({ token: '' });
+  };
+
+  const resetAlertData = () => {
+    setTimeout(() => {
+      setAlertData({ isError: false, message: '' });
+    }, 5000);
+  };
+
+  return {
+    alertData,
+    confirmedUser,
+    confirmFormData,
+    handleChange,
+    confirmAccount,
+  };
 };
