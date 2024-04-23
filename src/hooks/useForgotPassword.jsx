@@ -46,7 +46,7 @@ export const useForgotPassword = () => {
       setAlert({ isError: false, message: data.message });
 
       setTimeout(() => {
-        navigate(`forgot-password/${token}`);
+        navigate(`/forgot-password/${token}`);
         setToken('');
       }, 2000);
     } catch (error) {
