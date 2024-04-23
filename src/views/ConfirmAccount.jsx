@@ -38,10 +38,10 @@ export const ConfirmAccount = () => {
             placeholder='Código de verificación'
             className='w-full p-2 mt-3 border rounded-lg bg-gray-50'
           />
-          <div className='mt-2 text-gray-500'>
+          <p className='mt-2 mb-0 text-gray-500'>
             NOTA: Copia el código de verificación que hemos enviado a tu email,
             y pégalo aquí.
-          </div>
+          </p>
         </div>
 
         <input
