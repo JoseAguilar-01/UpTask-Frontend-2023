@@ -16,7 +16,6 @@ import { Project } from './views/Project';
 import { NewCollaborator } from './views/NewCollaborator';
 import { EditProject } from './views/EditProject';
 import './index.css';
-import { NotFound } from './views/404';
 
 const element = document.getElementById('root');
 const root = createRoot(element);
@@ -25,7 +24,6 @@ const router = createBrowserRouter([
   {
     path: '/',
     element: <AuthLayout />,
-    errorElement: <NotFound />,
     children: [
       {
         index: true,
@@ -52,7 +50,6 @@ const router = createBrowserRouter([
   {
     path: '/projects',
     element: <ProtectedRoute />,
-    errorElement: <NotFound />,
     children: [
       {
         index: true,
