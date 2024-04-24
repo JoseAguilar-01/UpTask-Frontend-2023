@@ -14,6 +14,7 @@ export const AuthProvider = ({ children }) => {
   });
   const [authData, steAuthData] = useState({});
   const [loading, setLoading] = useState(true);
+  const [enableVerification, setEnableVerification] = useState(false);
 
   useEffect(() => {
     authenticateUser();
@@ -91,6 +92,10 @@ export const AuthProvider = ({ children }) => {
         error,
       );
 
+      if (error.response.status === 403) {
+        setEnableVerification(true);
+      }
+
       setAlertData({
         isError: true,
         message: error.response.data.message,
@@ -121,6 +126,8 @@ export const AuthProvider = ({ children }) => {
       alertData,
       authData,
       loading,
+      enableVerification,
+      setEnableVerification,
       logout,
       handleLoginChange,
       handleLoginSubmit,
@@ -129,6 +136,8 @@ export const AuthProvider = ({ children }) => {
       loginFormData,
       alertData,
       authData,
+      enableVerification,
+      setEnableVerification,
       logout,
       handleLoginChange,
       handleLoginSubmit,

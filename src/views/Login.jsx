@@ -8,6 +8,8 @@ export const Login = () => {
     alertData,
     loginFormData,
     authData,
+    enableVerification,
+    setEnableVerification,
     handleLoginChange,
     handleLoginSubmit,
   } = useAuth();
@@ -19,6 +21,13 @@ export const Login = () => {
       navigate('/projects');
     }
   }, [authData]);
+
+  useEffect(() => {
+    if (enableVerification) {
+      setEnableVerification(false);
+      navigate('/confirm-account');
+    }
+  }, [enableVerification]);
 
   return (
     <>
